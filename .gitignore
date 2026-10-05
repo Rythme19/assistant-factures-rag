@@ -1,0 +1,13 @@
+# Secrets : jamais dans Git
+.env
+
+# Index vectoriel et tableau des montants : reconstruits par l'ingestion
+data/chroma/
+data/montants.csv
+
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
