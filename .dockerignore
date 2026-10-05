@@ -1,0 +1,13 @@
+# Jamais dans l'image : secrets, environnement local, documentation
+.env
+*.md
+*.pdf
+docs
+.venv
+.git
+.pytest_cache
+**/__pycache__
+
+# La base est reconstruite pendant la construction de l'image
+data/chroma
+data/montants.csv

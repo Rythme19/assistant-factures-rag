@@ -1,0 +1,25 @@
+services:
+  api:
+    build: .
+    image: assistant-factures
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: .env        # contient ANTHROPIC_API_KEY ; le service démarre aussi sans ce fichier
+        required: false
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  interface:
+    image: assistant-factures
+    command: streamlit run app/interface.py --server.port 8501 --server.address 0.0.0.0 --server.headless true
+    environment:
+      URL_API: http://api:8000
+    ports:
+      - "8502:8501"       # 8502 côté machine, pour ne pas gêner une autre application Streamlit
+    depends_on:
+      api:
+        condition: service_healthy
